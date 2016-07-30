@@ -15,6 +15,25 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String" , "URL", "\"https://api.nasa.gov\""
+            //signingConfig signingConfigs.release
+        }
+        debug {
+            minifyEnabled true
+            buildConfigField "String" , "URL", "\"https://api.nasa.gov\""
+
+           }
+    }
+
+    productFlavors {
+        old_version {
+            applicationId "mx.com.agutierrezm.mynasaapp.old"
+        }
+        future_release {
+            applicationId "mx.com.agutierrezm.mynasaapp.beta"
+        }
+        actual {
+            applicationId "mx.com.agutierrezm.mynasaapp.prod"
         }
     }
 }
@@ -23,4 +42,8 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+
 }
