@@ -19,7 +19,10 @@ import mx.com.agutierrezm.mynasaapp.model.Photo;
  */
 public class NassaApodAdapter extends RecyclerView.Adapter<NassaApodViewHolder>{
     private List<Photo> photos;
+    private OnItemClickListener onItemClickListener;
+    //private List<Photo> marsPhotos;
 
+    public NassaApodAdapter() {}
     public NassaApodAdapter(List<Photo> photos) {this.photos=photos;}
 
     @Override
@@ -31,17 +34,31 @@ public class NassaApodAdapter extends RecyclerView.Adapter<NassaApodViewHolder>{
     public void onBindViewHolder(NassaApodViewHolder holder, int position) {
         Photo photo = photos.get(position);
         String url = photo.getImgSrc();
-        Log.d("photo", photo.getEarthDate());
-        Picasso.with(holder.item_apod_image.getContext())
-                .load(url)
-                .into(holder.item_apod_image);
-
+        //Log.d("photo", photo.getEarthDate());
+        //Picasso.with(holder.item_apod_image.getContext()).load(url).into(holder.item_apod_image);
+        holder.item_apod_image.setImageURI(url);
         holder.item_apod_text.setText(String.valueOf(photo.getId()));
+        holder.setItemClick(photo,onItemClickListener);
 
     }
+
+
+    public void setOnItemClickListener( OnItemClickListener onItemClickListener){
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    public void setMarsPhotos(List<Photo> photos){
+        this.photos = photos;
+    }
+
 
     @Override
     public int getItemCount() {
         return photos != null ? photos.size() : 0;
+    }
+
+
+    public interface  OnItemClickListener{
+        void onItemClick(Photo photo);
     }
 }
