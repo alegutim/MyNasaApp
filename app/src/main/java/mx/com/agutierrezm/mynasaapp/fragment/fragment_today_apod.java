@@ -1,10 +1,15 @@
 package mx.com.agutierrezm.mynasaapp.fragment;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -40,6 +45,11 @@ public class fragment_today_apod extends Fragment {
     TextView main_explanation;
 
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Nullable
     @Override
@@ -70,5 +80,37 @@ public class fragment_today_apod extends Fragment {
         });
 
         return view;
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.apod_menu,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //Log.d("Snacl","todo ok si entro 1 ");
+        switch (item.getItemId()){
+            case R.id.share_today_apod:
+                //Log.d("Snacl","todo ok si entro 2 ");
+                //Snackbar.make(getView(),"Shared", Snackbar.LENGTH_SHORT).show();
+                shareText("Compartiendo");
+                return true;
+            default:
+          //      Log.d("Snacl","todo ok si entro 3 ");
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+
+
+    private void shareText(String text){
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT,text);
+        startActivity(Intent.createChooser(shareIntent,"Shared"));
     }
 }

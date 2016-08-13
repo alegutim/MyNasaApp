@@ -6,12 +6,14 @@
     <com.facebook.drawee.view.SimpleDraweeView
         android:layout_width="120dp"
         android:layout_height="120dp"
+        android:id="@+id/simple_image"
         android:src="@mipmap/ic_launcher"
         android:layout_margin="15dp"/>
     <TextView
+        android:id="@+id/simple_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Alejandro Gutierrez"
+        android:text=""
         android:layout_margin="15dp"/>
 
 

@@ -3,12 +3,16 @@ package mx.com.agutierrezm.mynasaapp.fragment;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -31,15 +35,20 @@ import retrofit2.Response;
  */
 public class fragment_list extends Fragment {
 
-
+    View view;
     @BindView(R.id.mars_rover_listing)
     RecyclerView marsRoverListingRecycler;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
-        View view = inflater.inflate(R.layout.activity_listing, container, false);
+        view = inflater.inflate(R.layout.activity_listing, container, false);
         ButterKnife.bind(this,view);
         //LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
@@ -80,4 +89,26 @@ public class fragment_list extends Fragment {
 
         return view;
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.listing_menu,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.add_favorite_listing:
+                Snackbar.make(getView(),"Added", Snackbar.LENGTH_SHORT).show();
+                return true;
+            default:
+                  return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+
+
+
 }
