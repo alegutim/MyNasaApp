@@ -1,18 +1,27 @@
 package mx.com.agutierrezm.mynasaapp;
 
 import android.content.Intent;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mx.com.agutierrezm.mynasaapp.data.ApodService;
 import mx.com.agutierrezm.mynasaapp.data.Data;
+import mx.com.agutierrezm.mynasaapp.fragment.fragment_list;
+import mx.com.agutierrezm.mynasaapp.fragment.fragment_today_apod;
 import mx.com.agutierrezm.mynasaapp.iu.view.apod.list.adapter.NassaApodAdapter;
 import mx.com.agutierrezm.mynasaapp.model.Mars;
 import mx.com.agutierrezm.mynasaapp.model.Photo;
@@ -23,52 +32,63 @@ import retrofit2.Response;
 
 public class ListingActivity extends AppCompatActivity {
 
-    @BindView(R.id.mars_rover_listing)
-    RecyclerView marsRoverListingRecycler;
+
+
+    @BindView(R.id.listing_toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.listing_navigation_view)
+    NavigationView navigationView;
+    @BindView(R.id.listing_navigation_drawer)
+    DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listing);
+        setContentView(R.layout.listing_navigation_activity);
         ButterKnife.bind(this);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(10,StaggeredGridLayoutManager.VERTICAL);
-
-        marsRoverListingRecycler.setLayoutManager(gridLayoutManager);
-
-        final NassaApodAdapter nassaApodAdapter = new NassaApodAdapter();
-
-        nassaApodAdapter.setOnItemClickListener(new NassaApodAdapter.OnItemClickListener() {
+        setSupportActionBar(toolbar);
+        //navigationView.setCheckedItem(0);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onItemClick(Photo photo) {
-                Comunicador.setObjeto(photo);
-                Intent intent = new Intent(getApplicationContext(),DetailActivity.class);
-                startActivity(intent);
+            public boolean onNavigationItemSelected(MenuItem item) {
+                drawerLayout.closeDrawers();
 
-                //Log.d("mars",photo.getImgSrc());
+                switch (item.getItemId()) {
+                    case R.id.today_apod_item:
+                        getFragmentManager().beginTransaction().replace(R.id.fragmentHolder,new fragment_today_apod()).commit();
+                        //Snackbar.make(findViewById(android.R.id.content),"Today Apod Item", Snackbar.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.mars_rover_item:
+                        getFragmentManager().beginTransaction().replace(R.id.fragmentHolder,new fragment_list()).commit();
+                        //Snackbar.make(findViewById(android.R.id.content),"Mars Rover", Snackbar.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.favorite_item:
+                        Snackbar.make(findViewById(android.R.id.content),"Favorite", Snackbar.LENGTH_SHORT).show();
+                        return true;
+                    default:
+                        return false;
+                }
+
             }
         });
 
-
-
-        ApodService apodService = Data.getRetrofitInstance().create(ApodService.class);
-
-        Call<Mars> callApodService = apodService.getPhotosMars();
-        callApodService.enqueue(new Callback<Mars>() {
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.app_name,R.string.app_name){
             @Override
-            public void onResponse(Call<Mars> call, Response<Mars> response) {
-                Log.d("MARS","No");
-                nassaApodAdapter.setMarsPhotos(response.body().getPhotos());
-                marsRoverListingRecycler.setAdapter(nassaApodAdapter);
-
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
             }
 
             @Override
-            public void onFailure(Call<Mars> call, Throwable t) {
-                Log.d("MARS","Fallo");
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
             }
-        });
+        };
+
+
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
     }
 }
+
