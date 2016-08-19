@@ -90,23 +90,6 @@ public class fragment_list extends Fragment {
         return view;
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.listing_menu,menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.add_favorite_listing:
-                Snackbar.make(getView(),"Added", Snackbar.LENGTH_SHORT).show();
-                return true;
-            default:
-                  return super.onOptionsItemSelected(item);
-
-        }
-    }
 
 
 

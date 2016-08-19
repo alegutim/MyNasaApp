@@ -8,4 +8,9 @@ android:id="@+id/share_today_apod"
     android:showAsAction="always"
     app:showAsAction="always"
     />
+ <item android:id="@+id/favorite_today_apod"
+     android:icon="@android:drawable/ic_menu_add"
+     android:title="favorite"
+     android:showAsAction="always"
+     app:showAsAction="always"/>
 </menu>
