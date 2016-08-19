@@ -13,17 +13,20 @@ import java.util.List;
 import mx.com.agutierrezm.mynasaapp.R;
 import mx.com.agutierrezm.mynasaapp.model.Apod;
 import mx.com.agutierrezm.mynasaapp.model.Photo;
+import mx.com.agutierrezm.mynasaapp.model.favorite;
 
 /**
  * Created by Alumno on 05/08/2016.
  */
 public class NassaApodAdapter extends RecyclerView.Adapter<NassaApodViewHolder>{
     private List<Photo> photos;
+
     private OnItemClickListener onItemClickListener;
     //private List<Photo> marsPhotos;
 
     public NassaApodAdapter() {}
     public NassaApodAdapter(List<Photo> photos) {this.photos=photos;}
+
 
     @Override
     public NassaApodViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

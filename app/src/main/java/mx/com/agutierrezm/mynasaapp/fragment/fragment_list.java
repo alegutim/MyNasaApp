@@ -62,8 +62,9 @@ public class fragment_list extends Fragment {
             @Override
             public void onItemClick(Photo photo) {
                 Comunicador.setObjeto(photo);
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(getActivity(), DetailActivity.class);
+                //startActivity(intent);
+                getFragmentManager().beginTransaction().replace(R.id.fragmentHolder,new fragment_detail()).commit();
             }
         });
 

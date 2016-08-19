@@ -33,6 +33,7 @@ import java.security.NoSuchAlgorithmException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import mx.com.agutierrezm.mynasaapp.fragment.fragment_favorite;
 import mx.com.agutierrezm.mynasaapp.fragment.fragment_list;
 import mx.com.agutierrezm.mynasaapp.fragment.fragment_today_apod;
 
@@ -71,7 +72,8 @@ public class ListingActivity extends AppCompatActivity {
                         //Snackbar.make(findViewById(android.R.id.content),"Mars Rover", Snackbar.LENGTH_SHORT).show();
                         return true;
                     case R.id.favorite_item:
-                        Snackbar.make(findViewById(android.R.id.content),"Favorite", Snackbar.LENGTH_SHORT).show();
+                        getFragmentManager().beginTransaction().replace(R.id.fragmentHolder,new fragment_favorite()).commit();
+                        //Snackbar.make(findViewById(android.R.id.content),"Favorite", Snackbar.LENGTH_SHORT).show();
                         return true;
                     default:
                         return false;
@@ -95,7 +97,7 @@ public class ListingActivity extends AppCompatActivity {
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
-/*
+
         Log.d("KeyHash:", "hola1");
 
         // Add code to print out the key hash
@@ -116,7 +118,7 @@ public class ListingActivity extends AppCompatActivity {
 
 
         Log.d("KeyHash:", "hola2");
-*/
+
 
         getFBUserInfo( );
     }

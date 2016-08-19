@@ -23,6 +23,7 @@ import mx.com.agutierrezm.mynasaapp.R;
 import mx.com.agutierrezm.mynasaapp.data.ApodService;
 import mx.com.agutierrezm.mynasaapp.data.Data;
 import mx.com.agutierrezm.mynasaapp.model.Apod;
+import mx.com.agutierrezm.mynasaapp.sql.AppDataSource;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,6 +33,8 @@ import retrofit2.Response;
  */
 public class fragment_today_apod extends Fragment {
 
+    AppDataSource appDataSource;
+    String url;
 
     @BindView(R.id.main_image)
     ImageView main_image;
@@ -49,6 +52,7 @@ public class fragment_today_apod extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        appDataSource = new AppDataSource(getActivity());
     }
 
     @Nullable
@@ -67,7 +71,8 @@ public class fragment_today_apod extends Fragment {
                 //Log.d("MARS","hola");
                 Apod apod = response.body();
                 main_date.setText(apod.getDate());
-                Picasso.with(getActivity()).load(apod.getHdurl()).into(main_image);
+                url = apod.getHdurl();
+                Picasso.with(getActivity()).load(url).into(main_image);
                 main_copyright.setText(apod.getCopyright());
                 main_title.setText(apod.getTitle());
                 main_explanation.setText(apod.getExplanation());
@@ -97,6 +102,9 @@ public class fragment_today_apod extends Fragment {
                 //Log.d("Snacl","todo ok si entro 2 ");
                 //Snackbar.make(getView(),"Shared", Snackbar.LENGTH_SHORT).show();
                 shareText("Compartiendo");
+                return true;
+            case R.id.favorite_today_apod:
+                appDataSource.saveFavorite(url);
                 return true;
             default:
           //      Log.d("Snacl","todo ok si entro 3 ");
