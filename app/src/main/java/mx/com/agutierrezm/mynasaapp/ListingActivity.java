@@ -97,7 +97,7 @@ public class ListingActivity extends AppCompatActivity {
 
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
-
+/*
         Log.d("KeyHash:", "hola1");
 
         // Add code to print out the key hash
@@ -118,7 +118,7 @@ public class ListingActivity extends AppCompatActivity {
 
 
         Log.d("KeyHash:", "hola2");
-
+*/
 
         getFBUserInfo( );
     }
