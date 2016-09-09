@@ -3,14 +3,16 @@
 <group android:checkableBehavior="single">
     <item android:id="@+id/mars_rover_item"
         android:checkable="false"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/mars_rover_item"
         android:title="Mars Rover Images"/>
 
     <item
+        android:icon="@drawable/ic_tapod"
         android:id="@+id/today_apod_item"
         android:checkable="false"
         android:title="Today APOD"/>
     <item
+        android:icon="@drawable/ic_favorite"
         android:id="@+id/favorite_item"
         android:checkable="false"
         android:title="Favorites"/>

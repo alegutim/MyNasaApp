@@ -105,6 +105,7 @@ public class fragment_today_apod extends Fragment {
                 return true;
             case R.id.favorite_today_apod:
                 appDataSource.saveFavorite(url);
+                Snackbar.make(getView(),"Added", Snackbar.LENGTH_SHORT).show();
                 return true;
             default:
           //      Log.d("Snacl","todo ok si entro 3 ");
